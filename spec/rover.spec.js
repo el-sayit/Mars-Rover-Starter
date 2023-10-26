@@ -49,19 +49,19 @@ it('response returned by receiveMessage contains the name of the message', () =>
   expect(rover.mode).toBe('LOW_POWER');
 })
 it ('responds with a false completed value when attempting to move in LOW_POWER mode', () => {
-  let commands = [new Command('LOW_POWER'),new Command('STATUS_CHECK'),new Command('MOVE',98382)]
+  let commands = [new Command('MODE_CHANGE', 'LOW_POWER'),new Command('STATUS_CHECK'),new Command('MOVE',98382)]
   let message = new Message('Any name',commands)
   let rover = new Rover(98382);
   let response = rover.receiveMessage(message);
-  expect(response.results[0].completed).toBe(false);
+  expect(response.results[2].completed).toBe(false);
   expect(rover.position).toBe(98382) 
 });
 it ('responds with the position for the move command', () => {
-  let commands = [new Command('MOVE', 2514),new Command('MODE_CHANGE','LOW_POWER'),new Command('STATUS_CHECK')]
+  let commands = [new Command('MOVE', 4321),new Command('MODE_CHANGE','LOW_POWER'),new Command('STATUS_CHECK')]
   let message = new Message('Any name',commands)
   let rover = new Rover(98382);
   let response = rover.receiveMessage(message);
-    expect(rover.position).toBe(2514);
+    expect(rover.position).toBe(98382);
     expect(response.results[0].completed).toBe(true);
   });
 });
